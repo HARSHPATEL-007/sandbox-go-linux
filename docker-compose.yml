@@ -1,0 +1,21 @@
+services:
+  goboxd:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: goboxd:latest
+    container_name: goboxd_daemon
+    ports:
+      - "8080:8080"
+    # CRITICAL: nsjail requires privileged status to provision nested 
+    # Linux namespaces, mount points, and cgroup limits inside the container.
+    privileged: true
+    environment:
+      - MAX_CONCURRENCY=16
+      - TZ=UTC
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"

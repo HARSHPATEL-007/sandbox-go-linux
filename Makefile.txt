@@ -1,0 +1,24 @@
+.PHONY: build run test lint load docker-build docker-run
+
+build:
+	go build -o bin/goboxd cmd/goboxd/main.go
+
+run: build
+	./bin/goboxd
+
+test:
+	go test -v -race ./...
+
+lint:
+	go vet ./...
+	staticcheck ./...
+
+docker-build:
+	docker build -t goboxd:latest .
+
+docker-run: docker-build
+	docker run --rm -p 8080:8080 --privileged goboxd:latest
+
+load:
+	@echo "Running sustained load test..."
+	hey -n 1000 -c 50 -m POST -T "application/json" -D docs/sample_req.json http://localhost:8080/run
