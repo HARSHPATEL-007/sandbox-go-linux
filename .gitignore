@@ -28,5 +28,43 @@ go.work.sum
 .env
 
 # Editor/IDE
+
 # .idea/
 # .vscode/
+# Binary outputs
+/bin/
+goboxd
+dist/
+
+# Code coverage and profiling tools
+*.out
+*.test
+*.prof
+*.pprof
+coverage.txt
+
+# Development environment / IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Dependencies
+# (Omit if you prefer checking in vendor/, but standard modules are excluded)
+vendor/
+
+# Runtime / Temporary files
+# Excludes local test sandbox paths or logs if generated outside the container
+tmp/
+*.log
+
+# Docker & Local environment overrides
+.env
+.env.local
+docker-compose.override.yml
+
+# nsjail build artifacts (if compiled locally outside Docker during dev)
+external/nsjail/nsjail
+external/nsjail/*.o
